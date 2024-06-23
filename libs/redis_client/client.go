@@ -20,14 +20,20 @@ func New(host string, port int, args ...string) (*RedisClient, error) {
 	if len(args) > 0 {
 		password = args[0]
 	}
+
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", host, port),
 		Password: password,
 		DB:       0, // use default DB
 	})
+
 	if err := rdb.Ping(ctx).Err(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf(
+			"failed to ping, host: '%s', port: '%d', password: '%s'; error: %s",
+			host, port, password, err.Error(),
+		)
 	}
+
 	return &RedisClient{rdb: rdb, ctx: ctx}, nil
 }
 

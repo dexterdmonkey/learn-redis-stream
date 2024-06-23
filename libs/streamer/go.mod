@@ -1,4 +1,4 @@
-module cathaline.asia/sub
+module libs/streamer
 
 go 1.21.5
 
