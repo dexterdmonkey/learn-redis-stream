@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"libs/redisclient"
-	"libs/streamer"
 	"log"
 	"time"
+
+	"github.com/dexterdmonkey/go-stream/redisclient"
+	"github.com/dexterdmonkey/go-stream/streams"
 )
 
 func main() {
@@ -16,7 +17,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	rds := streamer.NewRedisStream(redis.Redis(), redis.Context())
+	rds := streams.NewRedisStream(redis.Redis(), redis.Context())
 
 	// Subscribe messages
 	go rds.RetainStreams([]string{"*"}, 1*time.Minute, 1*time.Minute)
@@ -61,7 +62,4 @@ func main() {
 		rds.Publish(topic, messageID, message)
 		time.Sleep(1 * time.Second)
 	}
-
-	// Prevent the main function from exiting immediately
-	// select {}
 }

@@ -1,4 +1,4 @@
-package streamer
+package streams
 
 type Message struct {
 	ID     string

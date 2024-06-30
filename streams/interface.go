@@ -1,4 +1,4 @@
-package streamer
+package streams
 
 type Interface interface {
 	Consume(topic, consumerGroup, consumerName string) <-chan Message
